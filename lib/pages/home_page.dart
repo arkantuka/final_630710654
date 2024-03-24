@@ -16,6 +16,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<TodoItem> _todoItems = [];
   final myController = TextEditingController();
+  int choosed_index = 0;
 
   @override
   void initState() {
@@ -82,7 +83,10 @@ class _HomePageState extends State<HomePage> {
                     title: item.title,
                     subtitle: item.subtitle,
                     imageUrl: ApiCaller.host + item.image,
-                    onTap: () {},
+                    onTap: () {
+                      print(index);
+                      choosed_index = index;
+                    },
                   );
                 },
               ),
@@ -92,16 +96,10 @@ class _HomePageState extends State<HomePage> {
             // ปุ่มทดสอบ POST API
             ElevatedButton(
               onPressed: _handleApiPost,
-              child: const Text('Test POST API'),
+              child: const Text('ส่งข้อมูล'),
             ),
 
             const SizedBox(height: 8.0),
-
-            // ปุ่มทดสอบ OK Dialog
-            ElevatedButton(
-              onPressed: _handleShowDialog,
-              child: const Text('Show OK Dialog'),
-            ),
           ],
         ),
       ),
@@ -114,26 +112,17 @@ class _HomePageState extends State<HomePage> {
       final data = await ApiCaller().post(
         "Success",
         params: {
-          "userId": 1,
-          "title": "ทดสอบๆๆๆๆๆๆๆๆๆๆๆๆๆๆ",
-          "completed": true,
+          "id": "gambling",
+          "title": "เว็บพนัน",
         },
       );
       // API นี้จะส่งข้อมูลที่เรา post ไป กลับมาเป็น JSON object ดังนั้นต้องใช้ Map รับค่าจาก jsonDecode()
       Map map = jsonDecode(data);
       String text =
-          'ส่งข้อมูลสำเร็จ\n\n - id: ${map['id']} \n - userId: ${map['userId']} \n - title: ${map['title']} \n - completed: ${map['completed']}';
+          'ส่งข้อมูลสำเร็จ\n\n - id: ${map['id']} \n - userId: ${map['title']} \n';
       showOkDialog(context: context, title: "Success", message: text);
     } on Exception catch (e) {
       showOkDialog(context: context, title: "Error", message: e.toString());
     }
-  }
-
-  Future<void> _handleShowDialog() async {
-    await showOkDialog(
-      context: context,
-      title: "This is a title",
-      message: "This is a message",
-    );
   }
 }
