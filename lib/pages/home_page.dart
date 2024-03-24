@@ -112,8 +112,10 @@ class _HomePageState extends State<HomePage> {
       final data = await ApiCaller().post(
         "report_web",
         params: {
-          "id": "gambling",
-          "title": "เว็บพนัน",
+          "id": 2,
+          "url": "http://www.verybadweb.com",
+          "description": "",
+          "type": "gambling"
         },
       );
       // API นี้จะส่งข้อมูลที่เรา post ไป กลับมาเป็น JSON object ดังนั้นต้องใช้ Map รับค่าจาก jsonDecode()
