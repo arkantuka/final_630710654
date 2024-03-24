@@ -110,7 +110,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> _handleApiPost() async {
     try {
       final data = await ApiCaller().post(
-        "Success",
+        "report_web",
         params: {
           "id": "gambling",
           "title": "เว็บพนัน",
